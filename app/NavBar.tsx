@@ -9,6 +9,9 @@ import {
 import Link from "next/link"
 import { FaBug } from "react-icons/fa"
 import {ModeToggle} from "@/components/ModeToggle";
+import {usePathname} from "next/navigation";
+import classNames from "classnames";
+
 
 const navigationLinks: {id: number, title: string, href: string}[] = [
     {
@@ -24,11 +27,18 @@ const navigationLinks: {id: number, title: string, href: string}[] = [
 ]
 
 const NavBar = () => {
+    const currentPath = usePathname()
+
     return (
         <NavigationMenu className="list-none mb-5 w-[100%]">
             <NavigationMenuItem>
                 <Link href="/" legacyBehavior passHref>
-                    <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                    <NavigationMenuLink className={classNames({
+                        'text-blue-500': currentPath === "/",
+                        'text-primary': currentPath !== "/",
+                        'transition-colors': true,
+                    }) + navigationMenuTriggerStyle()
+                    }>
                         <FaBug />
                     </NavigationMenuLink>
                 </Link>
@@ -38,14 +48,20 @@ const NavBar = () => {
             {navigationLinks.map((link) => (
                 <NavigationMenuItem key={`link-${link.id}`}>
                     <Link href={link.href} legacyBehavior passHref>
-                        <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                        <NavigationMenuLink className={classNames({
+                            'text-blue-500': link.href === currentPath,
+                            'text-primary': link.href !== currentPath,
+                            'transition-colors': true,
+                        }) + navigationMenuTriggerStyle()
+                        }
+                        >
                             {link.title}
                         </NavigationMenuLink>
                     </Link>
                 </NavigationMenuItem>
             ))}
 
-            <NavigationMenuItem>
+            <NavigationMenuItem className="ml-auto">
                 <ModeToggle />
             </NavigationMenuItem>
 
