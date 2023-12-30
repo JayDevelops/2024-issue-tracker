@@ -1,8 +1,10 @@
 import react from "react"
-
+import {Button} from "@/components/ui/button";
 const IssuesPage = () => {
     return (
-        <div>Issues Page</div>
+        <div>
+            <Button variant="default">New Issue</Button>
+        </div>
     )
 }
 

@@ -28,7 +28,7 @@ export default function RootLayout({
           disableTransitionOnChange
       >
         <NavBar />
-        <main>
+        <main className="p-5">
           {children}
         </main>
       </ThemeProvider>
