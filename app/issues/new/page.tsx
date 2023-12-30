@@ -12,7 +12,7 @@ import {zodResolver} from "@hookform/resolvers/zod"
 import {z} from "zod"
 import {createIssueSchema} from "@/app/validationSchemas"
 import SimpleMDE from "react-simplemde-editor"
-import {Label} from "@/components/ui/label";
+import ErrorMessage from "@/components/ErrorMessage";
 
 type IssueForm = z.infer<typeof createIssueSchema>  // Infer type automatically from our validation schema
 
@@ -52,7 +52,9 @@ const NewIssuePage = () => {
                 })}
             >
                 <Input placeholder="Title" {...register('title')}  />
-                {errors.title && <Label className="text-red-500" >{errors.title.message}</Label> }
+
+                {/*Throw an error message if there is no title provided*/}
+                <ErrorMessage>{errors.title?.message}</ErrorMessage>
 
                 {/* react-hook-form controls the field on the simplemde editor, to retrieve that input*/}
                 <Controller
@@ -62,7 +64,9 @@ const NewIssuePage = () => {
                         <SimpleMDE placeholder="Write Your Issue Description Here..." {...field}/>
                     )}
                 />
-                {errors.description && <Label className="text-red-500">{errors.description.message}</Label> }
+                {/*Throw an error message if there is no description provided*/}
+                <ErrorMessage>{errors.description?.message}</ErrorMessage>
+
                 <Button variant="primaryBlue" className="w-1/4">Submit New Issue</Button>
             </form>
         </div>
