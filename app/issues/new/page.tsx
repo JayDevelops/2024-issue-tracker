@@ -13,6 +13,7 @@ import {z} from "zod"
 import {createIssueSchema} from "@/app/validationSchemas"
 import SimpleMDE from "react-simplemde-editor"
 import ErrorMessage from "@/components/ErrorMessage";
+import Spinner from "@/components/ui/Spinner";
 
 type IssueForm = z.infer<typeof createIssueSchema>  // Infer type automatically from our validation schema
 
@@ -30,15 +31,18 @@ const NewIssuePage = () => {
     })
 
     const [error, setError] = useState('')
+    const [isSubmitting, setSubmitting] = useState(false)
     return (
         <div>
             <form
                 className="grid max-w-xl gap-1.5 space-y-3"
                 onSubmit={handleSubmit(async (data) => {
                     try {
+                        setSubmitting(true)
                         await axios.post('/api/issues', data)
                         router.push('/issues')
                     } catch (error) {
+                        setSubmitting(false)
                         const errorText = "Unexpected error occurred"
                         setError(errorText)
                         toast.error(errorText, {
@@ -67,7 +71,11 @@ const NewIssuePage = () => {
                 {/*Throw an error message if there is no description provided*/}
                 <ErrorMessage>{errors.description?.message}</ErrorMessage>
 
-                <Button variant="primaryBlue" className="w-1/4">Submit New Issue</Button>
+                <Button
+                    variant="primaryBlue" className="w-1/3" disabled={isSubmitting}
+                >
+                    Submit New Issue &nbsp; {isSubmitting && <Spinner/>}
+                </Button>
             </form>
         </div>
     )
