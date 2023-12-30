@@ -1,9 +1,12 @@
 import react from "react"
 import {Button} from "@/components/ui/button";
+import Link from "next/link";
 const IssuesPage = () => {
     return (
         <div>
-            <Button variant="default">New Issue</Button>
+            <Link href="/issues/new">
+                <Button variant="default">New Issue</Button>
+            </Link>
         </div>
     )
 }

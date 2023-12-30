@@ -1,15 +1,16 @@
-import react from "react"
+'use client'
 import {Button} from "@/components/ui/button"
-import { Label } from "@/components/ui/label"
-import { Textarea } from "@/components/ui/textarea"
 import { Input } from "@/components/ui/input"
+import SimpleMDE from "react-simplemde-editor"
+import "easymde/dist/easymde.min.css"
 
 const NewIssuePage = () => {
+
     return (
         <div className="grid max-w-xl gap-1.5 space-y-3">
-            <Input id="title" placeholder="Title" />
+            <Input name="title" id="title" placeholder="Title" />
 
-            <Textarea placeholder="Write the description of the issue here..." id="message" />
+            <SimpleMDE placeholder="Write Your Issue Description Here..."/>
 
             <Button variant="primaryBlue" className="w-1/4" type="submit">Submit New Issue</Button>
         </div>
