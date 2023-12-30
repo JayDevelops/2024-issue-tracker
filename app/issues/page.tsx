@@ -4,7 +4,6 @@ import prisma from "@/prisma/client"
 import {
     Table,
     TableBody,
-    TableCaption,
     TableCell,
     TableHead,
     TableHeader,
@@ -27,7 +26,6 @@ const IssuesPage = async () => {
             <div className="rounded-md border">
                 <div className="relative w-full overflow-auto">
                     <Table>
-                        <TableCaption>List of all recorded issues.</TableCaption>
                         <TableHeader>
                             <TableRow>
                                 <TableHead>Issue</TableHead>
