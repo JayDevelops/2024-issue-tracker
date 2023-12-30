@@ -21,7 +21,6 @@ const NewIssuePage = () => {
     //  Use the router to push the new route to the issues page after submission
     const router: AppRouterInstance = useRouter()
 
-
     // Destructure the register from react-hook-form
     const {register,
         control,
@@ -32,28 +31,32 @@ const NewIssuePage = () => {
 
     const [error, setError] = useState('')
     const [isSubmitting, setSubmitting] = useState(false)
+
+    //  Handle form submission logic below
+    const onSubmit = handleSubmit(async (data) => {
+        try {
+            setSubmitting(true)
+            await axios.post('/api/issues', data)
+            router.push('/issues')
+        } catch (error) {
+            setSubmitting(false)
+            const errorText = "Unexpected error occurred"
+            setError(errorText)
+            toast.error(errorText, {
+                description: "Try submitting again or send email at: contact@jesusperez.dev",
+                action: {
+                    label: "Okay",
+                    onClick: () => null,
+                },
+            })
+        }
+    })
+
     return (
         <div>
             <form
                 className="grid max-w-xl gap-1.5 space-y-3"
-                onSubmit={handleSubmit(async (data) => {
-                    try {
-                        setSubmitting(true)
-                        await axios.post('/api/issues', data)
-                        router.push('/issues')
-                    } catch (error) {
-                        setSubmitting(false)
-                        const errorText = "Unexpected error occurred"
-                        setError(errorText)
-                        toast.error(errorText, {
-                            description: "Try submitting again or send email at: contact@jesusperez.dev",
-                            action: {
-                                label: "Okay",
-                                onClick: () => null,
-                            },
-                        })
-                    }
-                })}
+                onSubmit={onSubmit}
             >
                 <Input placeholder="Title" {...register('title')}  />
 
