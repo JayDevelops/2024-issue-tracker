@@ -19,7 +19,7 @@ const IssuesPage = async () => {
     return (
         <div>
             <div className="mb-5">
-                <Link className={buttonVariants({ variant: "primaryBlue" })} href={newIssuePageRoute}>Click here</Link>
+                <Link className={buttonVariants({ variant: "primaryBlue" })} href={newIssuePageRoute}>New Issue</Link>
             </div>
 
             {/*Parent divs add border and adjust the table within that border*/}
