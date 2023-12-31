@@ -10,7 +10,7 @@ import {useState} from "react"
 import {toast} from "sonner"
 import {zodResolver} from "@hookform/resolvers/zod"
 import {z} from "zod"
-import {createIssueSchema} from "@/app/validationSchemas"
+import {issueSchema} from "@/app/validationSchemas"
 import ErrorMessage from "@/components/ErrorMessage"
 import Spinner from "@/components/ui/Spinner"
 import dynamic from "next/dynamic"
@@ -20,7 +20,7 @@ const SimpleMDE = dynamic(
     () => import('react-simplemde-editor'),
     {ssr: false}
 )
-type IssueFormData = z.infer<typeof createIssueSchema>  // Infer type automatically from our validation schema
+type IssueFormData = z.infer<typeof issueSchema>  // Infer type automatically from our validation schema
 
 const IssueForm = ({issue}: {issue?: Issue}) => {
     //  Use the router to push the new route to the issues page after submission
@@ -31,7 +31,7 @@ const IssueForm = ({issue}: {issue?: Issue}) => {
         control,
         handleSubmit,
         formState: { errors }} = useForm<IssueFormData>({
-        resolver: zodResolver(createIssueSchema),
+        resolver: zodResolver(issueSchema),
     })
 
     const [error, setError] = useState('')
