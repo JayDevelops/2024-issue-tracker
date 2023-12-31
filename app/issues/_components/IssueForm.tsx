@@ -13,13 +13,9 @@ import {z} from "zod"
 import {issueSchema} from "@/app/validationSchemas"
 import ErrorMessage from "@/components/ErrorMessage"
 import Spinner from "@/components/ui/Spinner"
-import dynamic from "next/dynamic"
 import {Issue} from "@prisma/client"
+import SimpleMDE from "react-simplemde-editor"
 
-const SimpleMDE = dynamic(
-    () => import('react-simplemde-editor'),
-    {ssr: false}
-)
 type IssueFormData = z.infer<typeof issueSchema>  // Infer type automatically from our validation schema
 
 const IssueForm = ({issue}: {issue?: Issue}) => {

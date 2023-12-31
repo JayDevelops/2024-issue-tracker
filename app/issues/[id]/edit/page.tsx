@@ -1,6 +1,16 @@
-import IssueForm from "@/app/issues/_components/IssueForm"
 import prisma from "@/prisma/client"
 import {notFound} from "next/navigation"
+import IssueFormSkeleton from "@/app/issues/_components/IssueFormSkeleton"
+import dynamic from "next/dynamic"
+
+// Dynamically import the entire IssueFormComponent with no Server Side Rendering.
+const IssueForm = dynamic(
+    () => import('@/app/issues/_components/IssueForm'),
+    {
+        ssr: false,
+        loading: () => <IssueFormSkeleton />
+    }
+)
 
 interface EditIssuePageProps {
     params: {id: string},
