@@ -14,7 +14,7 @@ import {issueSchema} from "@/app/validationSchemas"
 import ErrorMessage from "@/components/ErrorMessage"
 import Spinner from "@/components/ui/Spinner"
 import dynamic from "next/dynamic"
-import {Issue} from "@prisma/client";
+import {Issue} from "@prisma/client"
 
 const SimpleMDE = dynamic(
     () => import('react-simplemde-editor'),
@@ -49,6 +49,7 @@ const IssueForm = ({issue}: {issue?: Issue}) => {
                 await axios.post('/api/issues', data)
             }
             router.push('/issues')
+            router.refresh() // refreshes the entire app to see new data/issues being submitted
         } catch (error) {
             setSubmitting(false)
             const errorText = "Unexpected error occurred"

@@ -52,4 +52,10 @@ const IssuesPage = async () => {
     )
 }
 
+// Tells Next.js to dynamically re-rendering at browser refresh
+export const dynamic = 'force-dynamic'
+
+// Next.js will revalidate the data every 0 seconds when on the Issues Page
+// export const revalidate: number = 0;
+
 export default IssuesPage
