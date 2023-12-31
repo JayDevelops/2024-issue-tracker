@@ -1,8 +1,6 @@
 import React from 'react'
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from "@/components/ui/table"
-import Skeleton from 'react-loading-skeleton'
-import 'react-loading-skeleton/dist/skeleton.css'
-import IssueActions from "@/app/issues/IssueActions"
+import Skeleton from "@/components"
 
 const LoadingIssuesPage = () => {
     const issues: number[] = [1, 2, 3, 4, 5]

@@ -1,6 +1,5 @@
 import {Card} from "@/components/ui/card"
-import Skeleton from "react-loading-skeleton"
-import 'react-loading-skeleton/dist/skeleton.css'
+import Skeleton from "@/components"
 
 const LoadingIssueDetailPage = () => {
     return (
