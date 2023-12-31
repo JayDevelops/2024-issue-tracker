@@ -1,9 +1,11 @@
 import prisma from "@/prisma/client"
 import {notFound} from "next/navigation"
-import {HeadingOneH1} from "@/components/typography/headings/heading-one";
-import IssueStatusBadge from "@/components/IssueStatusBadge";
-import {Text} from "@/components/typography/Text";
-import {Card, CardDescription, CardHeader} from "@/components/ui/card";
+import {HeadingOneH1} from "@/components/typography/headings/heading-one"
+import IssueStatusBadge from "@/components/IssueStatusBadge"
+import {Text} from "@/components/typography/Text"
+import {Card} from "@/components/ui/card"
+import ReactMarkdown from "react-markdown"
+
 interface IssueDetailPageProps {
     params: {id: string}
 }
@@ -28,9 +30,10 @@ const IssueDetailPage = async ({params}: IssueDetailPageProps) => {
             </div>
 
             <Card className="my-4">
-                <CardHeader>
-                    <CardDescription>{issue.description}</CardDescription>
-                </CardHeader>
+                <ReactMarkdown className="prose prose-stone dark:prose-invert p-3">
+                    {issue.description}
+                </ReactMarkdown>
+
             </Card>
         </div>
     )
