@@ -1,8 +1,8 @@
 'use client'
 import {Button} from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
+import {Input} from "@/components/ui/input"
 import axios from "axios"
-import {useForm, Controller} from "react-hook-form"
+import {Controller, useForm} from "react-hook-form"
 import "easymde/dist/easymde.min.css"
 import {useRouter} from "next/navigation"
 import {AppRouterInstance} from "next/dist/shared/lib/app-router-context.shared-runtime"
@@ -11,10 +11,14 @@ import {toast} from "sonner"
 import {zodResolver} from "@hookform/resolvers/zod"
 import {z} from "zod"
 import {createIssueSchema} from "@/app/validationSchemas"
-import SimpleMDE from "react-simplemde-editor"
-import ErrorMessage from "@/components/ErrorMessage";
-import Spinner from "@/components/ui/Spinner";
+import ErrorMessage from "@/components/ErrorMessage"
+import Spinner from "@/components/ui/Spinner"
+import dynamic from "next/dynamic"
 
+const SimpleMDE = dynamic(
+    () => import('react-simplemde-editor'),
+    {ssr: false}
+)
 type IssueForm = z.infer<typeof createIssueSchema>  // Infer type automatically from our validation schema
 
 const NewIssuePage = () => {
