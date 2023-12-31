@@ -1,5 +1,4 @@
 "use client"
-import react from 'react'
 import {
     NavigationMenu, NavigationMenuContent,
     NavigationMenuItem, NavigationMenuLink,
@@ -30,7 +29,7 @@ const NavBar = () => {
     const currentPath = usePathname()
 
     return (
-        <NavigationMenu className="list-none mb-5 w-[100%]">
+        <NavigationMenu className="list-none m-2 w-[100%] md:container md:mx-auto">
             <NavigationMenuItem>
                 <Link href="/" legacyBehavior passHref>
                     <NavigationMenuLink className={classNames({

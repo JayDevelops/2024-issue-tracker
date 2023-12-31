@@ -15,7 +15,7 @@ const IssueDetails = ({issue}: {issue: Issue}) => {
             </div>
 
             <Card className="my-4">
-                <ReactMarkdown className="prose prose-stone dark:prose-invert p-3">
+                <ReactMarkdown className="prose prose-stone dark:prose-invert p-4">
                     {issue.description}
                 </ReactMarkdown>
 
