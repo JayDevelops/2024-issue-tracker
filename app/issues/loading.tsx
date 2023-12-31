@@ -1,31 +1,16 @@
-import { buttonVariants } from "@/components/ui/button"
-import Link from "next/link"
-import prisma from "@/prisma/client"
-import {
-    Table,
-    TableBody,
-    TableCell,
-    TableHead,
-    TableHeader,
-    TableRow,
-} from "@/components/ui/table"
-import IssueStatusBadge from "@/components/IssueStatusBadge"
-import delay from "delay"
-import IssueActions from "@/app/issues/IssueActions";
+import React from 'react'
+import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from "@/components/ui/table"
+import Skeleton from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
+import IssueActions from "@/app/issues/IssueActions"
 
-
-const IssuesPage = async () => {
-    // Retrieve the issues from the DB
-    const issues = await prisma.issue.findMany()
-
-    await delay(2000)
+const LoadingIssuesPage = () => {
+    const issues: number[] = [1, 2, 3, 4, 5]
 
     return (
         <div>
-            {/*Render the top of the Issue Page.*/}
             <IssueActions />
 
-            {/*Parent divs add border and adjust the table within that border*/}
             <div className="rounded-md border">
                 <div className="relative w-full overflow-auto">
                     <Table>
@@ -39,26 +24,28 @@ const IssuesPage = async () => {
 
                         <TableBody>
                             {issues.map((issue) => (
-                                <TableRow key={issue.id}>
+                                <TableRow key={issue}>
                                     <TableCell>
-                                        {issue.title}
+                                        <Skeleton/>
                                         <div className="block md:hidden">
-                                            <IssueStatusBadge status={issue.status} />
+                                            <Skeleton/>
                                         </div>
                                     </TableCell>
                                     <TableCell className="hidden md:table-cell">
-                                        <IssueStatusBadge status={issue.status} />
+                                        <Skeleton/>
                                     </TableCell>
-                                    <TableCell className="hidden md:table-cell">{issue.createdAt.toDateString()}</TableCell>
+                                    <TableCell className="hidden md:table-cell">
+                                        <Skeleton/>
+                                    </TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>
                     </Table>
                 </div>
             </div>
-
         </div>
     )
 }
 
-export default IssuesPage
+
+export default LoadingIssuesPage
