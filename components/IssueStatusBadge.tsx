@@ -25,7 +25,7 @@ const statusMap: Record<Status, {label: string, badgeVariant: 'destructive' | 'i
 
 const IssueStatusBadge = ({status}: { status: Status }) => {
     return (
-        <Badge variant={statusMap[status].badgeVariant}>
+        <Badge variant={statusMap[status].badgeVariant} >
             {statusMap[status].label}
         </Badge>
     )
