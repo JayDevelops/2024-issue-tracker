@@ -25,7 +25,7 @@ const IssueDetailPage = async ({params}: IssueDetailPageProps) => {
                 <IssueDetails issue={issue} />
             </div>
 
-            <div className="md:mt-0">
+            <div className="md:mt-0 max-w-full md:col-span-1">
                 <div className="flex flex-col gap-4">
                     <EditIssueButton issueId={issue.id} />
                     <DeleteIssueButton issueId={issue.id} />
