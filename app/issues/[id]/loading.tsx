@@ -1,5 +1,5 @@
 import {Card} from "@/components/ui/card"
-import Skeleton from "@/components"
+import Skeleton from "@/components/Skeleton/Skeleton"
 
 const LoadingIssueDetailPage = () => {
     return (

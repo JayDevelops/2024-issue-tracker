@@ -1,14 +1,12 @@
 import React from 'react'
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from "@/components/ui/table"
-import Skeleton from "@/components"
+import Skeleton from "@/components/Skeleton/Skeleton"
 
 const LoadingIssuesPage = () => {
     const issues: number[] = [1, 2, 3, 4, 5]
 
     return (
         <div>
-            <IssueActions />
-
             <div className="rounded-md border">
                 <div className="relative w-full overflow-auto">
                     <Table>

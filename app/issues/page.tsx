@@ -1,12 +1,13 @@
 import prisma from "@/prisma/client"
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow,} from "@/components/ui/table"
-import {IssueStatusBadge, Link} from "@/components/"
-import IssueActions from "@/app/issues/IssueActions"
+import IssueActions from "@/app/issues/IssueActions";
+import {Link} from "@/components/Link"
+import IssueStatusBadge from "@/components/IssueStatusBadge";
+
 
 const IssuesPage = async () => {
     // Retrieve the issues from the DB
     const issues = await prisma.issue.findMany()
-
 
     return (
         <div>
