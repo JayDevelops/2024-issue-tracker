@@ -1,3 +1,4 @@
+"use client"
 import React from 'react'
 import {Button} from "@/components/ui/button"
 import {
@@ -8,8 +9,11 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "@/components/ui/dialog"
+import {useRouter} from "next/navigation"
+import axios from "axios";
 
 const DeleteIssueButton = ({issueId}: {issueId: number}) => {
+    const router = useRouter()
     return (
         <Dialog>
             <DialogTrigger asChild>
@@ -32,7 +36,11 @@ const DeleteIssueButton = ({issueId}: {issueId: number}) => {
                         </Button>
                     </DialogClose>
 
-                    <Button type="submit" variant="destructive">Delete Issue</Button>
+                    <Button type="submit" variant="destructive" onClick={async ()=> {
+                        await axios.delete('/api/issues/' + issueId)
+                        router.push('/issues')
+                        router.refresh()
+                    }}>Delete Issue</Button>
                 </DialogFooter>
             </DialogContent>
         </Dialog>
