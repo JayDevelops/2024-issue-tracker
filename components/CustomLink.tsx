@@ -1,10 +1,10 @@
-import NextLink from "next/link"
-import { cn } from "@/lib/utils"
+import NextLink from "next/link";
+import { cn } from "@/lib/utils";
 
 interface LinkProps {
-    href: string;
-    children: string;
-    customColorVariant?: string;
+    href: string,
+    children: string,
+    customColorVariant?: string,
 }
 
 const CustomLink = ({ href, children, customColorVariant }: LinkProps) => {
@@ -17,9 +17,7 @@ const CustomLink = ({ href, children, customColorVariant }: LinkProps) => {
     };
 
     // Determine the class name based on the customColorVariant prop
-    const colorVariantClassName = customColorVariant
-        ? colorVariantMapping[customColorVariant] || ""
-        : "";
+    const colorVariantClassName = customColorVariant ? colorVariantMapping[customColorVariant] || "" : "";
 
     // Concatenate the base class with the custom color variant class name
     const combinedClassName = cn(
@@ -31,7 +29,6 @@ const CustomLink = ({ href, children, customColorVariant }: LinkProps) => {
         <NextLink href={href} className={combinedClassName}>
             {children}
         </NextLink>
-    )
-}
-
-export {CustomLink}
+    );
+};
+export {CustomLink};

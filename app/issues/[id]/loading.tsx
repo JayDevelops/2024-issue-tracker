@@ -1,8 +1,19 @@
+import {Card} from "@/components/ui/card"
+import Skeleton from "react-loading-skeleton"
+import 'react-loading-skeleton/dist/skeleton.css'
 
 const LoadingIssueDetailPage = () => {
     return (
-        <div>
-            Loading Requested Issue...
+        <div className="max-w-xl">
+            <Skeleton />
+            <div className="flex flex-row space-x-3">
+                <Skeleton width="8rem"/>
+                <Skeleton width="5rem"/>
+            </div>
+
+            <Card className="my-4">
+                <Skeleton count={3}/>
+            </Card>
         </div>
     )
 }
