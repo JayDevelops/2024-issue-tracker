@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/table"
 import IssueStatusBadge from "@/components/IssueStatusBadge"
 import IssueActions from "@/app/issues/IssueActions"
-import {CustomLink} from "@/components/CustomLink"
+import {Link} from "@/components/Link"
 
 
 const IssuesPage = async () => {
@@ -38,9 +38,9 @@ const IssuesPage = async () => {
                             {issues.map((issue) => (
                                 <TableRow key={issue.id}>
                                     <TableCell>
-                                        <CustomLink href={`/issues/${issue.id}`} customColorVariant="primaryBlue">
+                                        <Link href={`/issues/${issue.id}`} customColorVariant="primaryBlue">
                                             {issue.title}
-                                        </CustomLink>
+                                        </Link>
                                         <div className="block md:hidden">
                                             <IssueStatusBadge status={issue.status} />
                                         </div>

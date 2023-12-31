@@ -7,7 +7,7 @@ interface LinkProps {
     customColorVariant?: string,
 }
 
-const CustomLink = ({ href, children, customColorVariant }: LinkProps) => {
+const Link = ({ href, children, customColorVariant }: LinkProps) => {
     // Define the mapping of custom color variants to Tailwind CSS class names
     const colorVariantMapping: Record<string, string> = {
         default: "text-primary hover:text-secondary",
@@ -31,4 +31,4 @@ const CustomLink = ({ href, children, customColorVariant }: LinkProps) => {
         </NextLink>
     );
 };
-export {CustomLink};
+export {Link};
