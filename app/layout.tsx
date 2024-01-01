@@ -6,6 +6,7 @@ import NavBar from "@/app/NavBar";
 import React from "react";
 import { ThemeProvider } from "@/components/theme-provider"
 import { Toaster } from "@/components/ui/toaster"
+import AuthProvider from "@/app/auth/Provider";
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -22,18 +23,20 @@ export default function RootLayout({
     return (
         <html lang="en" suppressHydrationWarning>
         <body className={inter.className}>
-        <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-        >
-            <NavBar />
-            <main className="md:container md:mx-auto p-5">
-                {children}
-            </main>
-            <Toaster />
-        </ThemeProvider>
+        <AuthProvider>
+            <ThemeProvider
+                attribute="class"
+                defaultTheme="system"
+                enableSystem
+                disableTransitionOnChange
+            >
+                <NavBar />
+                <main className="md:container md:mx-auto p-5">
+                    {children}
+                </main>
+                <Toaster />
+            </ThemeProvider>
+        </AuthProvider>
         </body>
         </html>
     )

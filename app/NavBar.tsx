@@ -5,9 +5,10 @@ import {
 } from "@/components/ui/navigation-menu"
 import Link from "next/link"
 import { FaBug } from "react-icons/fa"
-import {ModeToggle} from "@/components/ModeToggle";
-import {usePathname} from "next/navigation";
-import classNames from "classnames";
+import {ModeToggle} from "@/components/ModeToggle"
+import {usePathname} from "next/navigation"
+import classNames from "classnames"
+import {useSession} from "next-auth/react"
 
 
 const navigationLinks: {id: number, title: string, href: string}[] = [
@@ -25,6 +26,7 @@ const navigationLinks: {id: number, title: string, href: string}[] = [
 
 const NavBar = () => {
     const currentPath = usePathname()
+    const { status, data: session} = useSession()
 
     return (
         <NavigationMenu className="list-none m-2 w-[100%] md:container md:mx-auto">
@@ -57,6 +59,24 @@ const NavBar = () => {
                     </Link>
                 </NavigationMenuItem>
             ))}
+
+            {/* Detect user is logged in and conditionally render LogIn or LogOut NavigationMenuLinks. */}
+            <NavigationMenuItem>
+                {status === "authenticated" && (
+                    <Link href="/api/auth/signout" legacyBehavior passHref>
+                        <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                            Log Out
+                        </NavigationMenuLink>
+                    </Link>
+                )}
+                {status === "unauthenticated" && (
+                    <Link href="/api/auth/signin" legacyBehavior passHref>
+                        <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                            Log In
+                        </NavigationMenuLink>
+                    </Link>
+                )}
+            </NavigationMenuItem>
 
             <NavigationMenuItem className="ml-auto">
                 <ModeToggle />
