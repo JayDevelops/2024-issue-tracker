@@ -10,10 +10,11 @@ import {
     DialogTrigger,
 } from "@/components/ui/dialog"
 import {useRouter} from "next/navigation"
-import axios from "axios";
+import axios from "axios"
 import { ToastAction } from "@/components/ui/toast"
 import { useToast } from "@/components/ui/use-toast"
-import {Issue} from "@prisma/client";
+import {Issue} from "@prisma/client"
+import Spinner from "@/components/ui/Spinner"
 
 const DeleteIssueButton = ({issue}: {issue: Issue}) => {
     const issueId: number = issue.id
@@ -22,9 +23,11 @@ const DeleteIssueButton = ({issue}: {issue: Issue}) => {
     const { toast } = useToast()
     const router = useRouter()
     const [error, setError] = useState(false)
+    const [isDeleting, setDeleting] = useState(false)
 
     const deleteIssue = async () =>  {
         try {
+            setDeleting(true)
             await axios.delete('/api/issues/' + issueId)
             router.push('/issues')
             router.refresh()
@@ -35,6 +38,7 @@ const DeleteIssueButton = ({issue}: {issue: Issue}) => {
                 action: <ToastAction altText="Okay.">Okay.</ToastAction>
             })
         } catch (e) {
+            setDeleting(false)
             setError(true)
             toast({
                 variant: "destructive",
@@ -50,7 +54,10 @@ const DeleteIssueButton = ({issue}: {issue: Issue}) => {
     return (
         <Dialog>
             <DialogTrigger asChild>
-                <Button variant="destructive">Delete Issue</Button>
+                <Button variant="destructive" disabled={isDeleting}>
+                    Delete Issue
+                    {isDeleting && <Spinner />}
+                </Button>
             </DialogTrigger>
 
             <DialogContent>
