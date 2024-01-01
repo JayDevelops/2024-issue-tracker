@@ -44,7 +44,7 @@ const IssueForm = ({issue}: {issue?: Issue}) => {
             } else {
                 await axios.post('/api/issues', data)
             }
-            router.push('/issues')
+            router.push('/issues/list')
             router.refresh() // refreshes the entire app to see new data/issues being submitted
         } catch (error) {
             setSubmitting(false)

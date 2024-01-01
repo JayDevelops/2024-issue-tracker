@@ -6,7 +6,7 @@ import {Pencil2Icon} from "@radix-ui/react-icons"
 const EditIssueButton = ({issueId}: {issueId: number}) => {
     return (
         <Button asChild variant="primaryBlue">
-            <Link href={`/issues/${issueId}/edit`}> <Pencil2Icon /> &nbsp; Edit Issue</Link>
+            <Link href={`/issues/edit/${issueId}`}> <Pencil2Icon /> &nbsp; Edit Issue</Link>
         </Button>
     )
 }

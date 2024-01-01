@@ -1,6 +1,6 @@
 import prisma from "@/prisma/client"
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow,} from "@/components/ui/table"
-import IssueActions from "@/app/issues/IssueActions";
+import IssueActions from "@/app/issues/list/IssueActions";
 import {Link} from "@/components/Link"
 import IssueStatusBadge from "@/components/IssueStatusBadge";
 

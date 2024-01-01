@@ -1,9 +1,7 @@
 "use client"
 import {
-    NavigationMenu, NavigationMenuContent,
-    NavigationMenuItem, NavigationMenuLink,
-    NavigationMenuList,
-    NavigationMenuTrigger, navigationMenuTriggerStyle
+    NavigationMenu,
+    NavigationMenuItem, NavigationMenuLink, navigationMenuTriggerStyle
 } from "@/components/ui/navigation-menu"
 import Link from "next/link"
 import { FaBug } from "react-icons/fa"
@@ -21,7 +19,7 @@ const navigationLinks: {id: number, title: string, href: string}[] = [
     {
         id: 2,
         title: 'Issues',
-        href: '/issues'
+        href: '/issues/list'
     },
 ]
 
