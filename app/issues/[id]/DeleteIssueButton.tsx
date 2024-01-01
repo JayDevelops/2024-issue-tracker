@@ -1,5 +1,5 @@
 "use client"
-import React from 'react'
+import React, {useState} from 'react'
 import {Button} from "@/components/ui/button"
 import {
     Dialog, DialogClose,
@@ -11,9 +11,42 @@ import {
 } from "@/components/ui/dialog"
 import {useRouter} from "next/navigation"
 import axios from "axios";
+import { ToastAction } from "@/components/ui/toast"
+import { useToast } from "@/components/ui/use-toast"
+import {Issue} from "@prisma/client";
 
-const DeleteIssueButton = ({issueId}: {issueId: number}) => {
+const DeleteIssueButton = ({issue}: {issue: Issue}) => {
+    const issueId: number = issue.id
+    const issueTitle: string = issue.title
+
+    const { toast } = useToast()
     const router = useRouter()
+    const [error, setError] = useState(false)
+
+    const deleteIssue = async () =>  {
+        try {
+            await axios.delete('/api/issues/' + issueId)
+            router.push('/issues')
+            router.refresh()
+            toast({
+                variant: "default",
+                title: `${issueTitle}`,
+                description: "Has been successfully deleted.",
+                action: <ToastAction altText="Okay.">Okay.</ToastAction>
+            })
+        } catch (e) {
+            setError(true)
+            toast({
+                variant: "destructive",
+                title: "Uh oh! Something went wrong.",
+                description: "This issue couldn't be deleted. Click cancel below and try again.",
+                action: <ToastAction altText="Okay." onClick={() => {
+                    setError(false)
+                }}>Okay.</ToastAction>,
+            })
+        }
+    }
+
     return (
         <Dialog>
             <DialogTrigger asChild>
@@ -36,11 +69,7 @@ const DeleteIssueButton = ({issueId}: {issueId: number}) => {
                         </Button>
                     </DialogClose>
 
-                    <Button type="submit" variant="destructive" onClick={async ()=> {
-                        await axios.delete('/api/issues/' + issueId)
-                        router.push('/issues')
-                        router.refresh()
-                    }}>Delete Issue</Button>
+                    <Button type="submit" variant="destructive" onClick={deleteIssue}>Delete Issue</Button>
                 </DialogFooter>
             </DialogContent>
         </Dialog>

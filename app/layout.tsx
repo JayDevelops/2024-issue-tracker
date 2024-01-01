@@ -5,7 +5,7 @@ import { Inter } from 'next/font/google'
 import NavBar from "@/app/NavBar";
 import React from "react";
 import { ThemeProvider } from "@/components/theme-provider"
-import { Toaster } from "@/components/ui/sonner"
+import { Toaster } from "@/components/ui/toaster"
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -32,7 +32,7 @@ export default function RootLayout({
             <main className="md:container md:mx-auto p-5">
                 {children}
             </main>
-            <Toaster position="top-center"/>
+            <Toaster />
         </ThemeProvider>
         </body>
         </html>
