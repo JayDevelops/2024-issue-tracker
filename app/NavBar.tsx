@@ -21,7 +21,8 @@ import {
     DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu"
 import {Avatar, AvatarFallback, AvatarImage} from "@/components/ui/avatar"
-import {LogOut, User} from "lucide-react";
+import {LogOut, User} from "lucide-react"
+import Skeleton from '@/components/Skeleton/Skeleton'
 
 
 const NavBar = () => {
@@ -99,7 +100,7 @@ const AuthStatus = () => {
     const { status, data: session} = useSession()
 
     //  If the user is loading into the session, then return no component
-    if (status === "loading") return null
+    if (status === "loading") return <Skeleton width="3rem"/>
 
     //  If no user is logged in, return login component
     if(status === "unauthenticated") {
