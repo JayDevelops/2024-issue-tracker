@@ -1,14 +1,27 @@
 "use client"
 import {
     NavigationMenu,
-    NavigationMenuItem, NavigationMenuLink, navigationMenuTriggerStyle
+    NavigationMenuItem,
+    NavigationMenuLink,
+    navigationMenuTriggerStyle
 } from "@/components/ui/navigation-menu"
 import Link from "next/link"
-import { FaBug } from "react-icons/fa"
+import {FaBug} from "react-icons/fa"
 import {ModeToggle} from "@/components/ModeToggle"
 import {usePathname} from "next/navigation"
 import classNames from "classnames"
 import {useSession} from "next-auth/react"
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
+    DropdownMenuShortcut,
+    DropdownMenuTrigger
+} from "@/components/ui/dropdown-menu"
+import {Avatar, AvatarFallback, AvatarImage} from "@/components/ui/avatar"
+import {LogOut, User} from "lucide-react";
 
 
 const navigationLinks: {id: number, title: string, href: string}[] = [
@@ -69,11 +82,31 @@ const NavBar = () => {
                     {/* Detect user is logged in and conditionally render LogIn or LogOut NavigationMenuLinks. */}
                     <NavigationMenuItem className="flex items-center space-x-2">
                         {status === "authenticated" && (
-                            <Link href="/api/auth/signout" legacyBehavior passHref>
-                                <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                                    Log Out
-                                </NavigationMenuLink>
-                            </Link>
+                            <DropdownMenu>
+                                <DropdownMenuTrigger asChild>
+                                    <Avatar className="cursor-pointer">
+                                        <AvatarImage src={session?.user?.image!} referrerPolicy="no-referrer"  />
+                                        <AvatarFallback>CN</AvatarFallback>
+                                    </Avatar>
+                                </DropdownMenuTrigger>
+                                <DropdownMenuContent className="w-full">
+                                    <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                                    <DropdownMenuSeparator />
+                                    <DropdownMenuItem disabled>
+                                        <User className="mr-2 h-4 w-4" />
+                                        {session?.user?.email}
+                                    </DropdownMenuItem>
+                                    <DropdownMenuSeparator />
+                                    <DropdownMenuItem>
+                                        <LogOut className="mr-2 h-4 w-4" />
+                                        <Link href="/api/auth/signout">
+                                            Log Out
+                                        </Link>
+                                        <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
+                                    </DropdownMenuItem>
+
+                                </DropdownMenuContent>
+                            </DropdownMenu>
                         )}
                         {status === "unauthenticated" && (
                             <Link href="/api/auth/signin" legacyBehavior passHref>
