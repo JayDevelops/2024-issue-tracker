@@ -29,59 +29,66 @@ const NavBar = () => {
     const { status, data: session} = useSession()
 
     return (
-        <NavigationMenu className="list-none m-2 w-[100%] md:container md:mx-auto">
-            <NavigationMenuItem>
-                <Link href="/" legacyBehavior passHref>
-                    <NavigationMenuLink className={classNames({
-                        'text-blue-500': currentPath === "/",
-                        'text-primary': currentPath !== "/",
-                        'transition-colors': true,
-                    }) + navigationMenuTriggerStyle()
-                    }>
-                        <FaBug />
-                    </NavigationMenuLink>
-                </Link>
-            </NavigationMenuItem>
+        <NavigationMenu
+            className="sticky top-0 z-50 border-b border-border/40 list-none mb-5 px-4 h-14 md:container md:mx-auto text-base">
+            <div className="container flex h-14 max-w-screen-2xl items-center">
+                <div className="flex items-center space-x-2">
+                    <NavigationMenuItem className="flex items-center space-x-2">
+                        <Link href="/" legacyBehavior passHref>
+                            <NavigationMenuLink className={classNames({
+                                'text-blue-500': currentPath === "/",
+                                'text-primary': currentPath !== "/",
+                                'transition-colors': true,
+                            }) + navigationMenuTriggerStyle()
+                            }>
+                                <FaBug/>
+                            </NavigationMenuLink>
+                        </Link>
+                    </NavigationMenuItem>
 
 
-            {navigationLinks.map((link) => (
-                <NavigationMenuItem key={`link-${link.id}`}>
-                    <Link href={link.href} legacyBehavior passHref>
-                        <NavigationMenuLink className={classNames({
-                            'text-blue-500': link.href === currentPath,
-                            'text-primary': link.href !== currentPath,
-                            'transition-colors': true,
-                        }) + navigationMenuTriggerStyle()
-                        }
-                        >
-                            {link.title}
-                        </NavigationMenuLink>
-                    </Link>
-                </NavigationMenuItem>
-            ))}
+                    {navigationLinks.map((link) => (
+                        <NavigationMenuItem key={`link-${link.id}`}>
+                            <Link href={link.href} legacyBehavior passHref>
+                                <NavigationMenuLink className={classNames({
+                                    'text-blue-500': link.href === currentPath,
+                                    'text-primary': link.href !== currentPath,
+                                    'transition-colors': true,
+                                    'flex items-center gap-2 text-sm': true,
+                                }) + navigationMenuTriggerStyle()
+                                }
+                                >
+                                    {link.title}
+                                </NavigationMenuLink>
+                            </Link>
+                        </NavigationMenuItem>
+                    ))}
+                </div>
 
-            {/* Detect user is logged in and conditionally render LogIn or LogOut NavigationMenuLinks. */}
-            <NavigationMenuItem>
-                {status === "authenticated" && (
-                    <Link href="/api/auth/signout" legacyBehavior passHref>
-                        <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                            Log Out
-                        </NavigationMenuLink>
-                    </Link>
-                )}
-                {status === "unauthenticated" && (
-                    <Link href="/api/auth/signin" legacyBehavior passHref>
-                        <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                            Log In
-                        </NavigationMenuLink>
-                    </Link>
-                )}
-            </NavigationMenuItem>
+                <div className="flex items-center space-x-2 sm:pl-2 md:p-0 md:ml-auto">
+                    {/* Detect user is logged in and conditionally render LogIn or LogOut NavigationMenuLinks. */}
+                    <NavigationMenuItem className="flex items-center space-x-2">
+                        {status === "authenticated" && (
+                            <Link href="/api/auth/signout" legacyBehavior passHref>
+                                <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                                    Log Out
+                                </NavigationMenuLink>
+                            </Link>
+                        )}
+                        {status === "unauthenticated" && (
+                            <Link href="/api/auth/signin" legacyBehavior passHref>
+                                <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                                    Log In
+                                </NavigationMenuLink>
+                            </Link>
+                        )}
+                    </NavigationMenuItem>
 
-            <NavigationMenuItem className="ml-auto">
-                <ModeToggle />
-            </NavigationMenuItem>
-
+                    <NavigationMenuItem>
+                        <ModeToggle/>
+                    </NavigationMenuItem>
+                </div>
+            </div>
         </NavigationMenu>
     )
 }
