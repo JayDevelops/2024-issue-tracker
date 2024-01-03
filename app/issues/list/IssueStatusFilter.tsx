@@ -21,7 +21,7 @@ const IssueStatusFilter = () => {
     const searchParams: ReadonlyURLSearchParams = useSearchParams()
 
     return (
-        <Select defaultValue={searchParams.get("status" || "")!} onValueChange={(status) => {
+        <Select defaultValue={searchParams.get("status") || ""} onValueChange={(status) => {
             const params = new URLSearchParams()
 
             // If there is a status, then append the status to the passed status parameter

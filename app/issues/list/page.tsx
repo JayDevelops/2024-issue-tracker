@@ -1,37 +1,21 @@
 import prisma from "@/prisma/client"
-import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow,} from "@/components/ui/table"
-import IssueActions from "@/app/issues/list/IssueActions";
-import {Link} from "@/components/Link"
-import NextLink from "next/link"
-import IssueStatusBadge from "@/components/IssueStatusBadge";
-import {Issue, Status} from "@prisma/client";
-import {ArrowUpIcon} from "@radix-ui/react-icons";
-import Pagination from "@/components/Pagination";
+import IssueActions from "@/app/issues/list/IssueActions"
+import {Status} from "@prisma/client"
+import Pagination from "@/components/Pagination"
+import IssueTable, {columnNames, IssueQuery} from "@/app/issues/list/IssueTable"
 
 interface IssuePageProps {
-    searchParams: {
-        status: Status,
-        orderBy: keyof Issue,
-        page: string,
-    }
+    searchParams: IssueQuery,
 }
-type columnLabels = {label: string, value: keyof Issue, className?: string,}
 
 const IssuesPage = async ({searchParams}: IssuePageProps) => {
-    //  Columns for the table headers below
-    const columns: columnLabels[] = [
-        {label: "Issue", value: "title"},
-        {label: "Status", value: "status", className: "hidden md:table-cell"},
-        {label: "Created", value: "createdAt", className: "hidden md:table-cell"},
-    ]
-
     //  Check if the status is a valid status from the passed searchParams
     const statuses = Object.values(Status)
     const status  = statuses.includes(searchParams.status) ? searchParams.status : undefined
     const where = {status}
 
     // Check if the orderBy params are valid
-    const orderBy = columns.map(column => column.value).includes(searchParams.orderBy)
+    const orderBy = columnNames.includes(searchParams.orderBy)
         ? { [searchParams.orderBy]: "asc"}
         : undefined
 
@@ -51,50 +35,17 @@ const IssuesPage = async ({searchParams}: IssuePageProps) => {
     const issueCount = await prisma.issue.count({where,})
 
     return (
-        <div>
+        <div className="flex flex-col gap-3">
             {/*Render the top of the Issue Page.*/}
             <IssueActions />
 
             {/*Parent divs add border and adjust the table within that border*/}
             <div className="rounded-md border">
                 <div className="relative w-full overflow-auto">
-                    <Table>
-                        <TableHeader>
-                            <TableRow>
-                                {columns.map((column) => (
-                                    <TableHead key={column.value} className={column.className}>
-                                        <NextLink href={{
-                                            query: { ...searchParams, orderBy: column.value},
-                                        }} className="underline font-bold">
-                                            {column.label}
-                                        </NextLink>
-                                        {column.value === searchParams.orderBy && <ArrowUpIcon className="inline"/>}
-                                    </TableHead>
-                                ))}
-                            </TableRow>
-                        </TableHeader>
-
-                        <TableBody>
-                            {issues.map((issue) => (
-                                <TableRow key={issue.id}>
-                                    <TableCell>
-                                        <Link href={`/issues/${issue.id}`} customColorVariant="primaryBlue">
-                                            {issue.title}
-                                        </Link>
-                                        <div className="block md:hidden">
-                                            <IssueStatusBadge status={issue.status} />
-                                        </div>
-                                    </TableCell>
-                                    <TableCell className="hidden md:table-cell">
-                                        <IssueStatusBadge status={issue.status} />
-                                    </TableCell>
-                                    <TableCell className="hidden md:table-cell">{issue.createdAt.toDateString()}</TableCell>
-                                </TableRow>
-                            ))}
-                        </TableBody>
-                    </Table>
+                    <IssueTable searchParams={searchParams} issues={issues} />
                 </div>
             </div>
+
             <Pagination itemCount={issueCount} pageSize={pageSize} currentPage={page} />
         </div>
     )
