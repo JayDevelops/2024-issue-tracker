@@ -13,6 +13,7 @@ const Link = ({ href, children, customColorVariant }: LinkProps) => {
         default: "text-primary hover:text-secondary",
         destructive: "text-red-500 dark:text-red-600 hover:text-red-400 dark:hover:text-red-500",
         primaryBlue: "text-blue-500 dark:text-blue-600 hover:text-blue-400 dark:hover:text-blue-500",
+        secondaryViolet: "text-violet-500 dark:text-violet-700 hover:text-violet-300 dark:hover:text-violet-500",
         // Add more variants as needed
     };
 

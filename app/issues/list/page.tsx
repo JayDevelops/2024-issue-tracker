@@ -2,13 +2,25 @@ import prisma from "@/prisma/client"
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow,} from "@/components/ui/table"
 import IssueActions from "@/app/issues/list/IssueActions";
 import {Link} from "@/components/Link"
+import NextLink from "next/link"
 import IssueStatusBadge from "@/components/IssueStatusBadge";
-import {Status} from "@prisma/client";
+import {Issue, Status} from "@prisma/client";
+import {ArrowUpIcon} from "@radix-ui/react-icons";
 
 interface IssuePageProps {
-    searchParams: {status: Status}
+    searchParams: {status: Status, orderBy: keyof Issue}
 }
+type columnLabels = {label: string, value: keyof Issue, className?: string,}
+
 const IssuesPage = async ({searchParams}: IssuePageProps) => {
+    //  Columns for the table headers below
+    const columns: columnLabels[] = [
+        {label: "Issue", value: "title"},
+        {label: "Status", value: "status", className: "hidden md:table-cell"},
+        {label: "Created", value: "createdAt", className: "hidden md:table-cell"},
+    ]
+
+    //  Check if the status is a valid status from the passed searchParams
     const statuses = Object.values(Status)
     const status  = statuses.includes(searchParams.status) ? searchParams.status : undefined
 
@@ -28,9 +40,16 @@ const IssuesPage = async ({searchParams}: IssuePageProps) => {
                     <Table>
                         <TableHeader>
                             <TableRow>
-                                <TableHead>Issue</TableHead>
-                                <TableHead className="hidden md:table-cell">Status</TableHead>
-                                <TableHead className="hidden md:table-cell">Created</TableHead>
+                                {columns.map((column) => (
+                                    <TableHead key={column.value} className={column.className}>
+                                        <NextLink href={{
+                                            query: { ...searchParams, orderBy: column.value},
+                                        }} className="underline font-bold">
+                                            {column.label}
+                                        </NextLink>
+                                        {column.value === searchParams.orderBy && <ArrowUpIcon className="inline"/>}
+                                    </TableHead>
+                                ))}
                             </TableRow>
                         </TableHeader>
 
