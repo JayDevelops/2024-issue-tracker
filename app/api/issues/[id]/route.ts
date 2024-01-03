@@ -1,10 +1,19 @@
 import {NextRequest, NextResponse} from "next/server";
 import {issueSchema} from "@/app/validationSchemas";
+import {getServerSession} from "next-auth";
+import authOptions from "@/app/api/auth/authOptions";
 
 export async function PATCH(
     request: NextRequest,
     {params}: {params: {id: string}}) {
-    //  First get the body of the request
+
+    //  Get server session, if user isn't authenticated then return 401 status code
+    const session = await getServerSession(authOptions)
+    if(!session) {
+        return NextResponse.json({}, {status: 401})
+    }
+
+    //   Get the body of the request
     const body = await request.json()
 
     // Next store the zod validation schema and safeParse the request body
@@ -45,6 +54,12 @@ export async function PATCH(
 export async function DELETE(
     request: NextRequest,
     {params}: {params: {id: string}}) {
+
+    //  Get server session, if user isn't authenticated then return 401 status code
+    const session = await getServerSession(authOptions)
+    if(!session) {
+        return NextResponse.json({}, {status: 401})
+    }
 
     const issue = await prisma?.issue.findUnique({
         where: {

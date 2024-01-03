@@ -13,13 +13,9 @@ import {useRouter} from "next/navigation"
 import axios from "axios"
 import { ToastAction } from "@/components/ui/toast"
 import { useToast } from "@/components/ui/use-toast"
-import {Issue} from "@prisma/client"
 import Spinner from "@/components/ui/Spinner"
 
-const DeleteIssueButton = ({issue}: {issue: Issue}) => {
-    const issueId: number = issue.id
-    const issueTitle: string = issue.title
-
+const DeleteIssueButton = ({issueId, issueTitle}: {issueId: number, issueTitle: string}) => {
     const { toast } = useToast()
     const router = useRouter()
     const [error, setError] = useState(false)
