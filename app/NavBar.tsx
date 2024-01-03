@@ -23,6 +23,7 @@ import {
 import {Avatar, AvatarFallback, AvatarImage} from "@/components/ui/avatar"
 import {LogOut, User} from "lucide-react"
 import Skeleton from '@/components/Skeleton/Skeleton'
+import {ReactElement} from "react"
 
 
 const NavBar = () => {
@@ -48,11 +49,12 @@ const NavBar = () => {
 
 const NavLinks = () => {
     const currentPath = usePathname()
-    const navigationLinks: {id: number, title: string, href: string}[] = [
+    const navigationLinks: {id: number, title: string, href: string, icon?: ReactElement}[] = [
         {
             id: 1,
             title: 'Dashboard',
-            href: '/dashboard'
+            icon: <FaBug />,
+            href: '/'
         },
         {
             id: 2,
@@ -63,19 +65,6 @@ const NavLinks = () => {
 
     return (
         <>
-            <NavigationMenuItem className="flex items-center space-x-2">
-                <Link href="/" legacyBehavior passHref>
-                    <NavigationMenuLink className={classNames({
-                        'text-blue-500': currentPath === "/",
-                        'text-primary': currentPath !== "/",
-                        'transition-colors': true,
-                    }) + navigationMenuTriggerStyle()
-                    }>
-                        <FaBug/>
-                    </NavigationMenuLink>
-                </Link>
-            </NavigationMenuItem>
-
             {navigationLinks.map((link) => (
                 <NavigationMenuItem key={`link-${link.id}`}>
                     <Link href={link.href} legacyBehavior passHref>
@@ -87,6 +76,7 @@ const NavLinks = () => {
                         }) + navigationMenuTriggerStyle()
                         }
                         >
+                            {link.icon}
                             {link.title}
                         </NavigationMenuLink>
                     </Link>
