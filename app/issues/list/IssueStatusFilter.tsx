@@ -1,7 +1,7 @@
 "use client"
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/components/ui/select"
 import {Status} from "@prisma/client"
-import {useRouter} from "next/navigation"
+import {ReadonlyURLSearchParams, useRouter, useSearchParams} from "next/navigation"
 import {AppRouterInstance} from "next/dist/shared/lib/app-router-context.shared-runtime"
 
 type statusLabelValue = {
@@ -18,11 +18,21 @@ const statuses:statusLabelValue[] = [
 
 const IssueStatusFilter = () => {
     const router: AppRouterInstance = useRouter()
+    const searchParams: ReadonlyURLSearchParams = useSearchParams()
 
     return (
-        <Select onValueChange={(status) => {
+        <Select defaultValue={searchParams.get("status" || "")!} onValueChange={(status) => {
+            const params = new URLSearchParams()
+
+            // If there is a status, then append the status to the passed status parameter
+            if(status) params.append("status", status)
+
+            // If there is a parameter with orderBy then append to the query parameters
+            if(searchParams.get("orderBy")) {
+                params.append("orderBy", searchParams.get("orderBy")!)
+            }
             //  If the passed status is set to "All" then return a blank query, else set to mapped status
-            const query = status === "ALL" ? "" : `?status=${status}`
+            const query = params.size ? "?" + params.toString(): ""
             router.push(`/issues/list${query}`)
         }}>
             <SelectTrigger className="flex items-center w-[40%] md:w-[16%]">
