@@ -1,8 +1,10 @@
 "use client"
 import {
     Select,
-    SelectContent, SelectGroup,
-    SelectItem, SelectLabel,
+    SelectContent,
+    SelectGroup,
+    SelectItem,
+    SelectLabel,
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select"
@@ -10,7 +12,7 @@ import {Issue, User} from "@prisma/client"
 import axios from "axios"
 import {useQuery} from "react-query"
 import Skeleton from "@/components/Skeleton/Skeleton"
-import { useToast } from "@/components/ui/use-toast"
+import {useToast} from "@/components/ui/use-toast"
 import {ToastAction} from "@/components/ui/toast"
 
 
@@ -18,12 +20,7 @@ const AssigneeSelect = ({issue}: {issue: Issue}) => {
     const { toast } = useToast()
 
     //  User react query to retrieve the user data, then handle errors and isLoading states.
-    const {data: users, error, isLoading} = useQuery<User[]>({
-        queryKey: ["users"],
-        queryFn: () => axios.get("/api/users").then(res => res.data),
-        staleTime: 60 * 1000, // 60 seconds where users are refreshed
-        retry: 3,   // every 3 seconds the api will retry to retrieve users
-    })
+    const {data: users, error, isLoading} = useUsers()
 
     //  If the data is loading from React Query, then render a Skeleton to the user
     if(isLoading) return <Skeleton />
@@ -68,6 +65,12 @@ const AssigneeSelect = ({issue}: {issue: Issue}) => {
     )
 }
 
+const useUsers = () => useQuery<User[]>({
+    queryKey: ["users"],
+    queryFn: () => axios.get("/api/users").then(res => res.data),
+    staleTime: 60 * 1000, // 60 seconds where users are refreshed
+    retry: 3,   // every 3 seconds the api will retry to retrieve users
+})
 
 export default AssigneeSelect
 
