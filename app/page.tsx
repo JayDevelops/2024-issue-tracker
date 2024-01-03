@@ -1,4 +1,5 @@
 import IssueSummary from "@/app/IssueSummary";
+import IssueChart from "@/app/IssueChart";
 
 export default async function Home() {
     //  Get each count for the three types of issues statuses
@@ -14,6 +15,6 @@ export default async function Home() {
 
 
     return (
-        <IssueSummary open={openCount || 0} inProgress={inProgressCount || 0} closed={closedCount || 0} />
+        <IssueChart open={openCount || 0} inProgress={inProgressCount || 0} closed={closedCount || 0} />
   )
 }
