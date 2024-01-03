@@ -21,6 +21,7 @@ const AssigneeSelect = () => {
         }
         fetchUsers()
     }, [])
+
     return (
         <Select>
             <SelectTrigger className="w-full">

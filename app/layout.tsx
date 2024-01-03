@@ -7,6 +7,7 @@ import React from "react";
 import { ThemeProvider } from "@/components/theme-provider"
 import { Toaster } from "@/components/ui/toaster"
 import AuthProvider from "@/app/auth/Provider";
+import QueryClientProvider from "@/app/QueryClientProvider";
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -23,20 +24,22 @@ export default function RootLayout({
     return (
         <html lang="en" suppressHydrationWarning>
         <body className={inter.className}>
-        <AuthProvider>
-            <ThemeProvider
-                attribute="class"
-                defaultTheme="system"
-                enableSystem
-                disableTransitionOnChange
-            >
-                <NavBar />
-                <main className="md:container md:mx-auto p-5">
-                    {children}
-                </main>
-                <Toaster />
-            </ThemeProvider>
-        </AuthProvider>
+        <QueryClientProvider>
+            <AuthProvider>
+                <ThemeProvider
+                    attribute="class"
+                    defaultTheme="system"
+                    enableSystem
+                    disableTransitionOnChange
+                >
+                    <NavBar />
+                    <main className="md:container md:mx-auto p-5">
+                        {children}
+                    </main>
+                    <Toaster />
+                </ThemeProvider>
+            </AuthProvider>
+        </QueryClientProvider>
         </body>
         </html>
     )
