@@ -1,5 +1,5 @@
 import {NextRequest, NextResponse} from "next/server";
-import {issueSchema} from "@/app/validationSchemas";
+import {patchIssueSchema} from "@/app/validationSchemas";
 import {getServerSession} from "next-auth";
 import authOptions from "@/app/api/auth/authOptions";
 
@@ -17,11 +17,26 @@ export async function PATCH(
     const body = await request.json()
 
     // Next store the zod validation schema and safeParse the request body
-    const validation = issueSchema.safeParse(body)
+    const validation = patchIssueSchema.safeParse(body)
 
     // If the validation is not successful, then throw a response error
     if(!validation.success) {
         return NextResponse.json(validation.error.format(), {status: 400})
+    }
+
+    //  Destructure the fields first
+    const {assignedToUserId, title, description} = body
+
+
+    //  If there is an "assignToUserID" field, then use the patchIssueSchema validation. The other code below this will still be updating the userdy
+    if(assignedToUserId) {
+        const user = await prisma?.user.findUnique({
+            where: {id: assignedToUserId}
+        })
+
+        if(!user) {
+            return NextResponse.json({error: "Invalid User"}, {status: 400})
+        }
     }
 
     // Find the issue of the validation
@@ -42,8 +57,9 @@ export async function PATCH(
             id: issue.id,
         },
         data: {
-            title: body.title,
-            description: body.description,
+            title,
+            description,
+            assignedToUserId,
         }
     })
 
