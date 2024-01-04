@@ -6,18 +6,19 @@ import IssueDetails from "@/app/issues/[id]/IssueDetails"
 import {getServerSession} from "next-auth";
 import authOptions from "@/app/api/auth/authOptions";
 import AssigneeSelect from "@/app/issues/[id]/AssigneeSelect";
+import {cache} from "react";
 
 interface IssueDetailPageProps {
     params: {id: string}
 }
 
+const fetchUser = cache((issueId: number) => prisma.issue.findUnique({where: {id: issueId}}))
+
 const IssueDetailPage = async ({params}: IssueDetailPageProps) => {
     const session = await getServerSession(authOptions)
 
     //  Find/Grab the requested clicked issue
-    const issue = await prisma.issue.findUnique({
-        where: {id: parseInt(params.id)}
-    })
+    const issue = await fetchUser(parseInt(params.id))
 
     //  If the issue doesn't exist, then redirect the user to the not-found page
     if(!issue) {
@@ -44,7 +45,7 @@ const IssueDetailPage = async ({params}: IssueDetailPageProps) => {
 }
 
 export async function generateMetadata({params}: IssueDetailPageProps) {
-    const issue = await prisma.issue.findUnique({where: {id: parseInt(params.id)}})
+    const issue = await fetchUser(parseInt(params.id))
 
     return {
         title: issue?.title,
