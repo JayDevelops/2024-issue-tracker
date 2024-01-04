@@ -16,6 +16,10 @@ interface IssueTableProps {
 }
 
 const IssueTable = ({searchParams, issues}: IssueTableProps) => {
+    if (!issues || issues.length === 0) {
+        return null
+    }
+
     return (
         <Table>
             <TableHeader>
@@ -54,6 +58,7 @@ const IssueTable = ({searchParams, issues}: IssueTableProps) => {
         </Table>
     )
 }
+
 
 //  Columns for the table headers below and it's associated types
 type columnLabels = {label: string, value: keyof Issue, className?: string}

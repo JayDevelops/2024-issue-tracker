@@ -3,7 +3,8 @@ import IssueActions from "@/app/issues/list/IssueActions"
 import {Status} from "@prisma/client"
 import Pagination from "@/components/Pagination"
 import IssueTable, {columnNames, IssueQuery} from "@/app/issues/list/IssueTable"
-import {Metadata} from "next";
+import {Metadata} from "next"
+import classNames from "classnames";
 
 interface IssuePageProps {
     searchParams: IssueQuery,
@@ -38,16 +39,18 @@ const IssuesPage = async ({searchParams}: IssuePageProps) => {
     return (
         <div className="flex flex-col gap-3">
             {/*Render the top of the Issue Page.*/}
-            <IssueActions />
+            <IssueActions  showIssueStatusFilter={issueCount !== 0}/>
 
             {/*Parent divs add border and adjust the table within that border*/}
-            <div className="rounded-md border">
+            <div className={classNames("relative w-full overflow-auto", {
+                "rounded-md border": issueCount !== 0,
+            })}>
                 <div className="relative w-full overflow-auto">
-                    <IssueTable searchParams={searchParams} issues={issues} />
+                    <IssueTable searchParams={searchParams} issues={issues}/>
                 </div>
             </div>
 
-            <Pagination itemCount={issueCount} pageSize={pageSize} currentPage={page} />
+            <Pagination itemCount={issueCount} pageSize={pageSize} currentPage={page}/>
         </div>
     )
 }
