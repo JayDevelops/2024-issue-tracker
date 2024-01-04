@@ -31,7 +31,7 @@ export async function PATCH(
 
     //  If there is an "assignToUserID" field, then use the patchIssueSchema validation. The other code below this will still be updating the userdy
     if(assignedToUserId) {
-        const user = await prisma?.user.findUnique({
+        const user = await prisma.user.findUnique({
             where: {id: assignedToUserId}
         })
 
@@ -41,7 +41,7 @@ export async function PATCH(
     }
 
     // Find the issue of the validation
-    const issue = await prisma?.issue.findUnique({
+    const issue = await prisma.issue.findUnique({
         where: {
             id: parseInt(params.id),
         }
@@ -53,7 +53,7 @@ export async function PATCH(
     }
 
     //  Update the issue on the prisma database server
-    const updatedIssue = await prisma?.issue.update({
+    const updatedIssue = await prisma.issue.update({
         where: {
             id: issue.id,
         },
@@ -78,7 +78,7 @@ export async function DELETE(
         return NextResponse.json({}, {status: 401})
     }
 
-    const issue = await prisma?.issue.findUnique({
+    const issue = await prisma.issue.findUnique({
         where: {
             id: parseInt(params.id),
         }
@@ -88,7 +88,7 @@ export async function DELETE(
         return NextResponse.json({error: 'Invalid Issue.'}, {status: 404})
     }
 
-    await prisma?.issue.delete({
+    await prisma.issue.delete({
         where: {
             id: issue.id,
         },
