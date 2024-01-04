@@ -3,6 +3,7 @@ import IssueActions from "@/app/issues/list/IssueActions"
 import {Status} from "@prisma/client"
 import Pagination from "@/components/Pagination"
 import IssueTable, {columnNames, IssueQuery} from "@/app/issues/list/IssueTable"
+import {Metadata} from "next";
 
 interface IssuePageProps {
     searchParams: IssueQuery,
@@ -56,5 +57,11 @@ export const dynamic = 'force-dynamic'
 
 // Next.js will revalidate the data every 0 seconds when on the Issues Page
 // export const revalidate: number = 0;
+
+export const metadata: Metadata = {
+    title: "Issue Tracker - Issue List",
+    description:
+        "View all project issues on Issue Tracker. Effortlessly manage and organize all project issues with the Issue List on the Issue Tracker.",
+}
 
 export default IssuesPage
