@@ -14,12 +14,15 @@ export default async function Home() {
         where: {status: "CLOSED"}
     }) || 0
 
+    // Here we will have one object to share between the IssueSummary and IssueChart
+    const sharedIssueProps = {open: openCount, inProgress: inProgressCount, closed: closedCount}
+
 
     return (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             <div className="flex flex-col gap-5">
-                <IssueSummary open={openCount} inProgress={inProgressCount} closed={closedCount} />
-                <IssueChart open={openCount} inProgress={inProgressCount} closed={closedCount} />
+                <IssueSummary {...sharedIssueProps} />
+                <IssueChart {...sharedIssueProps} />
             </div>
             <LatestIssues />
         </div>
