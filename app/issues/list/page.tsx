@@ -4,7 +4,7 @@ import {Status} from "@prisma/client"
 import Pagination from "@/components/Pagination"
 import IssueTable, {columnNames, IssueQuery} from "@/app/issues/list/IssueTable"
 import {Metadata} from "next"
-import classNames from "classnames";
+import classNames from "classnames"
 
 interface IssuePageProps {
     searchParams: IssueQuery,
