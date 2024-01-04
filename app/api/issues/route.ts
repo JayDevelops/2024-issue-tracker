@@ -2,7 +2,7 @@ import {NextRequest, NextResponse} from "next/server"
 import prisma from "@/prisma/client"
 import {issueSchema} from "@/app/validationSchemas"
 import {getServerSession} from "next-auth";
-import authOptions from "@/app/api/auth/authOptions";
+import authOptions from "@/app/api/auth/authOptions"
 
 export async function POST(request: NextRequest) {
     //  Get server session, if user isn't authenticated then return 401 status code

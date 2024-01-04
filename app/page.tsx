@@ -1,11 +1,12 @@
-import IssueSummary from "@/app/IssueSummary";
-import IssueChart from "@/app/IssueChart";
-import LatestIssues from "@/app/LatestIssues";
-import {Metadata} from "next";
+import IssueSummary from "@/app/IssueSummary"
+import IssueChart from "@/app/IssueChart"
+import LatestIssues from "@/app/LatestIssues"
+import {Metadata} from "next"
+import prisma from "@/prisma/client"
 
 export default async function Home() {
     //  Get each count for the three types of issues statuses
-    const openCount = await prisma?.issue.count({
+    const openCount = await prisma.issue.count({
         where: {status: "OPEN"}
     }) || 0
     const inProgressCount = await prisma?.issue.count({
