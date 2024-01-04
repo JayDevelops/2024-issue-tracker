@@ -39,7 +39,7 @@ const IssuesPage = async ({searchParams}: IssuePageProps) => {
     return (
         <div className="flex flex-col gap-3">
             {/*Render the top of the Issue Page.*/}
-            <IssueActions  showIssueStatusFilter={issueCount !== 0}/>
+            <IssueActions />
 
             {/*Parent divs add border and adjust the table within that border*/}
             <div className={classNames("relative w-full overflow-auto", {
