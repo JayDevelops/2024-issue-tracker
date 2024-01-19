@@ -8,7 +8,7 @@ export async function PATCH(
     request: NextRequest,
     {params}: {params: {id: string}}) {
 
-    //  Get server session, if user isn't authenticated then return 401 status code
+    //  Get server session, if user isn't authenticated then return 401 status codes
     const session = await getServerSession(authOptions)
     if(!session) {
         return NextResponse.json({}, {status: 401})
