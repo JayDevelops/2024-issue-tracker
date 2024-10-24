@@ -32,7 +32,6 @@ const NavBar = () => {
             className="sticky top-0 z-50 border-b border-border/40 list-none mb-5 px-4 h-14 md:container md:mx-auto text-base">
             <div className="container flex h-14 max-w-screen-2xl items-center">
                 <div className="flex items-center space-x-2">
-                    {/*NavLinks includes the logo and navigation left links*/}
                     <NavLinks />
                 </div>
 
